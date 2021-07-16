@@ -14,9 +14,6 @@ while [ $SECONDS -lt $end ]; do
 
     echo "Timeout: $SECONDS elapsed out of $end allotted "
 
-    BITRISE_APP_SLUG=d3d618764c9a906d
-    BITRISE_PERSONAL_ACCESS_TOKEN=AsREb-FpCM4IBy1yJ3zgKY9q-tAoPqdwv-9cQwucgNjeXjbzxwHXfFAxLVkVls2C00h5iEUPWphe11xsnlmqhg
-
     running_builds=$(curl -s "https://api.bitrise.io/v0.1/apps/${BITRISE_APP_SLUG}/builds?status=0" -H "accept: application/json" -H "Authorization: $BITRISE_PERSONAL_ACCESS_TOKEN" | jq ".data | .[] | .machine_type_id" | grep -c "g2.$core_count" || true)
     
 
