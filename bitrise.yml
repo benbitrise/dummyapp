@@ -1,0 +1,434 @@
+---
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+trigger_map:
+- pull_request_source_branch: '*'
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - certificate-and-profile-installer@1: {}
+    - git-clone@4: {}
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set +x
+            sed -i "" "s/IPHONEOS_DEPLOYMENT_TARGET = [0-9][0-9]\.[0-9]/IPHONEOS_DEPLOYMENT_TARGET = ${DEPLOYMENT_TARGET}/g" DummyApp.xcodeproj/project.pbxproj
+            git diff
+    - xcode-test@2:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - output_tool: xcodebuild
+        - headless_mode: 'no'
+        - simulator_os_version: 'latest'
+        - simulator_device: iPhone 8 Plus
+        - xcodebuild_test_options: '-parallel-testing-enabled $PARALLEL_TESTING -maximum-parallel-testing-workers $SIMULATOR_COUNT'
+    - deploy-to-bitrise-io@1:
+        is_always_run: true
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
+        machine_type_id: g2.8core
+  clone_test-gen2-4_core-xcode13.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-13.0.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.5-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.5.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.4-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.3-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.3.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.2-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.2.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.1-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.1.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode12.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.0.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-4_core-xcode11.7-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-11.7.x
+        machine_type_id: g2.4core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode13.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-13.0.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.5-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.5.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.4-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.3-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.3.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.2-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.2.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.1-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.1.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode12.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.0.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-8_core-xcode11.7-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-11.7.x
+        machine_type_id: g2.8core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode13.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-13.0.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.5-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.5.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.4-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.3-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.3.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.2-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.2.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.1-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.1.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode12.0-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.0.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  clone_test-gen2-12_core-xcode11.7-6_sims:
+    after_run:
+    - primary
+    meta:
+      bitrise.io:
+        stack: osx-xcode-11.7.x
+        machine_type_id: g2.12core
+    envs:
+    - opts:
+        is_expand: false
+      SIMULATOR_COUNT: '6'
+    - opts:
+        is_expand: false
+      PARALLEL_TESTING: 'YES'
+  start_4_core:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            ./start_builds.sh 4
+  start_8_core:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            ./start_builds.sh 8
+  start_12_core:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            ./start_builds.sh 12
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: DummyApp.xcodeproj
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: DummyApp
+  - opts:
+      is_expand: false
+    BITRISE_EXPORT_METHOD: development
+  - opts:
+      is_expand: false
+    BITRISE_PROFILE_ID: b103a1f0-1f51-4d53-a41f-c08719676e94
+  - opts:
+      is_expand: false
+    BITRISE_CODE_SIGNING_IDENTITY: 'iPhone Developer: Dev Portal Bot Bitrise (E89JV3W9K4)'
+  - opts:
+      is_expand: false
+    BITRISE_TEAM: 72SA8V3WYL
+  - opts:
+      is_expand: false
+    MACHINE_TYPE: g2.4core
+  - opts:
+      is_expand: false
+    SIMULATOR_COUNT: '1'
+  - opts:
+      is_expand: false
+    PARALLEL_TESTING: 'NO'
+  - opts:
+      is_expand: false
+    DEPLOYMENT_TARGET: '14.5' 
