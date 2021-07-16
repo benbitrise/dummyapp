@@ -31,7 +31,7 @@ while [ $SECONDS -lt $end ]; do
     for i in {0..7};
     do
     echo $i
-    curl https://app.bitrise.io/app/${BITRISE_APP_SLUG}/build/start.json --data "{\"hook_info\":{\"type\":\"bitrise\",\"build_trigger_token\":\"${BUILD_TRIGGER_TOKEN}\"},\"build_params\":{\"branch\":\"many_ui_tests\",\"workflow_id\":\"clone_test-gen2-${core_count}_core-${workflow_suffixes[i]}\", \"environments\": [{\"mapped_to\":\"DEPLOYMENT_TARGET\",\"value\":\"${deployment_targets[i]}\",\"is_expand\":true}]},\"triggered_by\":\"curl\"}"
+    curl https://app.bitrise.io/app/${BITRISE_APP_SLUG}/build/start.json --data "{\"hook_info\":{\"type\":\"bitrise\",\"build_trigger_token\":\"${BUILD_TRIGGER_TOKEN}\"},\"build_params\":{\"branch\":\"main\",\"workflow_id\":\"clone_test-gen2-${core_count}_core-${workflow_suffixes[i]}\", \"environments\": [{\"mapped_to\":\"DEPLOYMENT_TARGET\",\"value\":\"${deployment_targets[i]}\",\"is_expand\":true}]},\"triggered_by\":\"curl\"}"
     sleep 15
     done
 done
